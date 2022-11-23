@@ -1,8 +1,7 @@
 FROM	debian:buster
 
-RUN	apt update && \
-	apt upgrade && \
-	apt install mariadb \
+RUN	apt-get update && \
+	apt-get install -y mariadb-server \
 				mariadb-client
 
 COPY	conf/my.cnf /etc/my.cnf
