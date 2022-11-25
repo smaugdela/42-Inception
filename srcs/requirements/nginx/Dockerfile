@@ -1,7 +1,7 @@
 FROM	debian:buster
 
 # Updating OS and installing Nginx & Openssl
-RUN	apt-get update && \
+RUN	apt-get update -y && \
 	apt-get install -y nginx \
 				openssl
 
@@ -14,6 +14,8 @@ COPY	conf/nginx.conf /etc/nginx/nginx.conf
 RUN	mkdir -p /var/www/html
 RUN	chmod 755 /var/www/html
 COPY	conf/index.html /var/www/html/index.html
+
+RUN mkdir -p /run/nginx
 
 # Exposing https port
 EXPOSE	443

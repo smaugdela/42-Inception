@@ -1,6 +1,6 @@
 FROM	debian:buster
 
-RUN	apt-get update && \
+RUN	apt-get update -y && \
 	apt-get install -y mariadb-server \
 				mariadb-client
 
@@ -17,6 +17,8 @@ RUN	mkdir -p /var/run/mysqld  && \
 RUN	mysql_install_db --user=mysql
 
 EXPOSE	3306
+
+ENTRYPOINT ["/scripts/startup.sh"]
 
 # FROM alpine:3.16.2
 
