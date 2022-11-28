@@ -1,3 +1,20 @@
 version: '3'
 
+services:
+        nginx:
+                build: requirements/nginx/
+                restart: on-failure
+                ports:
+                        - "443:443"
+                env_file: .env
+        wordpress:
+                depends_on: 
+                        - mariadb
+                build: requirements/wordpress/
+                restart: on-failure
+                env_file: .env
+        mariadb:
+                build: requirements/mariadb/
+                restart: on-failure
+                env_file: .env
 
