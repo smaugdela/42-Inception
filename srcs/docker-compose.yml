@@ -2,6 +2,8 @@ version: '3'
 
 services:
         nginx:
+                depends_on:
+                        - wordpress
                 build: requirements/nginx/
                 restart: on-failure
                 ports:

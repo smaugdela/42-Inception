@@ -2,8 +2,8 @@ FROM	debian:buster
 
 RUN	apt-get update -y && \
 	apt-get install -y mariadb-server \
-				mariadb-client
-
+				mariadb-client \
+				expect
 COPY	conf/my.cnf /etc/my.cnf
 
 RUN		mkdir -p /scripts
