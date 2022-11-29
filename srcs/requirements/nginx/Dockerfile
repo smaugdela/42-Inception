@@ -13,7 +13,6 @@ RUN	openssl req -x509 -days 365 -nodes -out /etc/nginx/ssl/inception.crt -keyout
 COPY	conf/nginx.conf /etc/nginx/nginx.conf
 RUN	mkdir -p /var/www/html
 RUN	chmod 755 /var/www/html
-COPY	conf/index.html /var/www/html/index.html
 
 RUN mkdir -p /run/nginx
 
