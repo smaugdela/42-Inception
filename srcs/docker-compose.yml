@@ -2,6 +2,7 @@ version: '3'
 
 services:
         nginx:
+                container_name: nginx
                 depends_on:
                         - wordpress
                 build: requirements/nginx/
@@ -9,20 +10,41 @@ services:
                 ports:
                         - "443:443"
                 env_file: .env
+                volumes:
+                  - wordpress_data:/var/www/html
+                networks:
+                  - default
         wordpress:
+                container_name: wordpress
                 depends_on: 
                         - mariadb
                 build: requirements/wordpress/
                 restart: on-failure
                 env_file: .env
-                expose:
-                        - "9000"
                 links:
                         - mariadb
+                volumes:
+                  - wordpress_data:/var/www/html
+                networks:
+                  - default
         mariadb:
+                container_name: mariadb
                 build: requirements/mariadb/
                 restart: on-failure
                 env_file: .env
-                expose:
-                        - "3306"
+                networks:
+                  - default
 
+volumes:
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/vbachele/data/wordpress
+      o: bind
+# Add mariadb volume
+
+networks:
+  default:
+    driver: bridge
+# Check netoworks

@@ -26,8 +26,8 @@ RUN	curl -O https://wordpress.org/wordpress-6.1.tar.gz && \
 COPY	conf/wp-config.php	/var/www/html/wp-config.php
 
 RUN	chown -R www-data:www-data * && \
-	chmod 755 . && \
-	chmod 644 * && \
+	chmod -R 755 . && \
+	chmod 755 * && \
 	mkdir -p /run/php
 
 EXPOSE	9000
