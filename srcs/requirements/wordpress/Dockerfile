@@ -23,10 +23,9 @@ RUN	curl -O https://wordpress.org/wordpress-6.1.tar.gz && \
 	mv wordpress/* . && \
 	rm -rf wordpress
 
-COPY	conf/wp-config.php	/var/www/html/wp-config.php
+# COPY	conf/wp-config.php	/var/www/html/wp-config.php
 
-RUN	chown -R www-data:www-data * && \
-	chmod -R 755 . && \
+RUN	chown -R root:root * && \
 	chmod 755 * && \
 	mkdir -p /run/php
 
