@@ -11,10 +11,9 @@ RUN	openssl req -x509 -days 365 -nodes -out /etc/nginx/ssl/inception.crt -keyout
 
 # Setting up nginx
 COPY	conf/nginx.conf /etc/nginx/nginx.conf
-RUN	mkdir -p /var/www/html
-RUN	chmod 755 /var/www/html
-
-RUN mkdir -p /run/nginx
+RUN	mkdir -p /var/www/html && \
+	chown -R root:root /var/www/html && \
+	mkdir -p /run/nginx
 
 # Exposing https port
 EXPOSE	443
