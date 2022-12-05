@@ -42,14 +42,14 @@ volumes:
     driver: local
     driver_opts:
       type: none
-      device: '/home/debian/data/wordpress' # /home/$MASTER/data/wordpress
+      device: '/home/smagdela/data/wordpress' # /home/$MASTER/data/wordpress
       o: bind
   mariadb_data:
     driver: local
     driver_opts:
       type: none 
       o: bind										 # Les Bind Mounts sont des volumes qui se montent sur un chemin d'accès à l'hôte, et ils peuvent être modifiés par d'autres processus en dehors de docker.
-      device: '/home/debian/data/mariadb' # /home/$MASTER/data/mariadb
+      device: '/home/smagdela/data/mariadb' # /home/$MASTER/data/mariadb
 
 networks:
   default:
