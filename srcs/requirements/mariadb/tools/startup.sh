@@ -24,7 +24,7 @@ expect \"Remove anonymous users?\"
 send \"Y\r\"
 
 expect \"Disallow root login remotely?\"
-send \"Y\r\"
+send \"n\r\"
 
 expect \"Remove test database and access to it?\"
 send \"Y\r\"
@@ -36,7 +36,7 @@ expect eof
 "
 
 mysql -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;"
-mysql -e "CREATE USER IF NOT EXISTS '$SQL_USER'@'localhost' IDENTIFIED BY '$SQL_USER_PWD';"
+mysql -e "CREATE USER IF NOT EXISTS '$SQL_USER'@'%' IDENTIFIED BY '$SQL_USER_PWD';"
 mysql -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$SQL_USER' IDENTIFIED BY '$SQL_USER_PWD';"
 mysql -e "FLUSH PRIVILEGES;"
 
