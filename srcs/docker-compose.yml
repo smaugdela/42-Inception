@@ -1,56 +1,57 @@
 version: '3'
 
 services:
-        nginx:
-                container_name: nginx
-                depends_on:
-                        - wordpress
-                build: requirements/nginx/
-                restart: on-failure
-                ports:
-                        - "443:443"
-                env_file: .env
-                volumes:
-                  - wordpress_data:/var/www/html
-                networks:
-                  - default
-        wordpress:
-                container_name: wordpress
-                depends_on: 
-                        - mariadb
-                build: requirements/wordpress/
-                restart: on-failure
-                env_file: .env
-                links:
-                        - mariadb
-                volumes:
-                  - wordpress_data:/var/www/html
-                networks:
-                  - default
-        mariadb:
-                container_name: mariadb
-                build: requirements/mariadb/
-                restart: on-failure
-                env_file: .env
-                volumes:
-		  - mariadb_data:/var/lib/mysql
-		networks:
-                  - default
+  nginx:
+    container_name: nginx
+    depends_on:
+      - wordpress
+    build: requirements/nginx/
+    restart: on-failure
+    ports:
+      - "443:443"
+    env_file: .env
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - default
+  wordpress:
+    container_name: wordpress
+    depends_on: 
+      - mariadb
+    build: requirements/wordpress/
+    restart: on-failure
+    env_file: .env
+    links:
+      - mariadb
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - default
+  mariadb:
+    container_name: mariadb
+    build: requirements/mariadb/
+    restart: on-failure
+    env_file: .env
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - default
 
 volumes:
-	wordpress_data:
-		driver: local
-		driver_opts:
-		type: none
-		device: /home/$MASTER/data/wordpress
-		o: bind
-	mariadb_data:
-		driver: local
-		driver_opts:
-		type: none 
-		o: bind										 # Les Bind Mounts sont des volumes qui se montent sur un chemin d'accès à l'hôte, et ils peuvent être modifiés par d'autres processus en dehors de docker.
-		device: /Users/$MASTER/data/mariadb
+  wordpress_data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/$MASTER/data/wordpress
+      o: bind
+  mariadb_data:
+    driver: local
+    driver_opts:
+      type: none 
+      o: bind										 # Les Bind Mounts sont des volumes qui se montent sur un chemin d'accès à l'hôte, et ils peuvent être modifiés par d'autres processus en dehors de docker.
+      device: /Users/$MASTER/data/mariadb
+
 networks:
   default:
     driver: bridge
-# Check netoworks
+# Check networks
