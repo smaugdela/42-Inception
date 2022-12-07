@@ -1,7 +1,5 @@
 #!/bin/bash
 
-sleep 10
-
 cd /var/www/html
 
 #curl -O https://wordpress.org/wordpress-6.1.tar.gz
@@ -18,5 +16,9 @@ sed -i "s/localhost/$DB_HOST/g" wp-config.php
 sed -i "s/database_name_here/$DB_NAME/g" wp-config.php
 
 #mv wp-config-sample.php wp-config.php
+
+sleep 15
+
+echo "Launching php-fpm..."
 
 exec /usr/sbin/php-fpm7.3 --nodaemonize

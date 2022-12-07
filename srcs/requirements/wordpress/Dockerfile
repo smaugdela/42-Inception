@@ -35,4 +35,4 @@ RUN	chmod 755 /scripts/wp_config.sh && \
 
 # EXPOSE	9000
 
-ENTRYPOINT ["/scripts/wp_config.sh"]
+ENTRYPOINT ["sh", "/scripts/wp_config.sh"]

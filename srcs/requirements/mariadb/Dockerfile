@@ -18,7 +18,7 @@ RUN	mysql_install_db
 
 # EXPOSE	3306
 
-ENTRYPOINT ["/scripts/startup.sh"]
+ENTRYPOINT ["sh", "/scripts/startup.sh"]
 
 # FROM alpine:3.16.2
 
