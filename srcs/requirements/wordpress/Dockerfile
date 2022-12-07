@@ -16,6 +16,11 @@ RUN	apt-get update -y && \
 
 COPY	conf/www.conf	/etc/php/7.3/fpm/pool.d/www.conf
 
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+	chmod +x wp-cli.phar
+
+RUN mv wp-cli.phar /usr/local/bin/wp
+
 WORKDIR	/var/www/html
 
 RUN	curl -O https://wordpress.org/wordpress-6.1.tar.gz && \
@@ -30,9 +35,9 @@ COPY	tools/wp_config.sh	/scripts/wp_config.sh
 
 RUN	chmod 755 /scripts/wp_config.sh && \
 	mkdir -p /run/php && \
-	chown -R root:root * && \
+	chown -R www-data:www-data . && \
 	chmod 755 *
 
-# EXPOSE	9000
+EXPOSE	9000
 
 ENTRYPOINT ["sh", "/scripts/wp_config.sh"]

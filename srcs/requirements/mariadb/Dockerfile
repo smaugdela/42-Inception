@@ -16,7 +16,7 @@ RUN	mkdir -p /var/run/mysqld  && \
 
 RUN	mysql_install_db
 
-# EXPOSE	3306
+EXPOSE	3306
 
 ENTRYPOINT ["sh", "/scripts/startup.sh"]
 

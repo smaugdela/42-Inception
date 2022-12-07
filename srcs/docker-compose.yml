@@ -5,7 +5,9 @@ services:
     container_name: nginx
     depends_on:
       - wordpress
-    build: requirements/nginx/
+    build:
+      context: ./requirements/nginx/
+      dockerfile: ./Dockerfile
     restart: on-failure
     ports:
       - "443:443"
@@ -13,31 +15,31 @@ services:
     volumes:
       - wordpress_data:/var/www/html
     networks:
-      - default
+      - backend
   wordpress:
     container_name: wordpress
     depends_on: 
       - mariadb
-    build: requirements/wordpress/
+    build:
+      context: ./requirements/wordpress/
+      dockerfile: ./Dockerfile
     restart: on-failure
     env_file: .env
     volumes:
       - wordpress_data:/var/www/html
     networks:
-      - default
-    ports:
-      - "9000"
+      - backend
   mariadb:
     container_name: mariadb
-    build: requirements/mariadb/
+    build:
+      context: ./requirements/mariadb/
+      dockerfile: ./Dockerfile
     restart: on-failure
     env_file: .env
     volumes:
       - mariadb_data:/var/lib/mysql
     networks:
-      - default
-    ports:
-      - "3306"
+      - backend
 
 volumes:
   wordpress_data:
@@ -54,5 +56,6 @@ volumes:
       device: '/home/smagdela/data/mariadb'
 
 networks:
-  default:
+  backend:
+    name: backend
     driver: bridge
