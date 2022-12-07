@@ -14,9 +14,9 @@ RUN	mkdir -p /var/run/mysqld  && \
 	chmod 777 /var/run/mysqld \
 		/scripts/startup.sh
 
-RUN	mysql_install_db --user=mysql
+RUN	mysql_install_db
 
-EXPOSE	3306
+# EXPOSE	3306
 
 ENTRYPOINT ["/scripts/startup.sh"]
 

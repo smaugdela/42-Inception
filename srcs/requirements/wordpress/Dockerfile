@@ -11,7 +11,8 @@ RUN	apt-get update -y && \
 						php7.3-mbstring \
 						php7.3-xml \
 						php7.3-gd \
-						php7.3-curl
+						php7.3-curl \
+						mariadb-client
 
 COPY	conf/www.conf	/etc/php/7.3/fpm/pool.d/www.conf
 
@@ -23,12 +24,15 @@ RUN	curl -O https://wordpress.org/wordpress-6.1.tar.gz && \
 	mv wordpress/* . && \
 	rm -rf wordpress
 
-# COPY	conf/wp-config.php	/var/www/html/wp-config.php
+RUN	mkdir -p /scripts
 
-RUN	chown -R root:root * && \
-	chmod 755 * && \
-	mkdir -p /run/php
+COPY	tools/wp_config.sh	/scripts/wp_config.sh
 
-EXPOSE	9000
+RUN	chmod 755 /scripts/wp_config.sh && \
+	mkdir -p /run/php && \
+	chown -R root:root * && \
+	chmod 755 *
 
-ENTRYPOINT ["/usr/sbin/php-fpm7.3", "-F"]
+# EXPOSE	9000
+
+ENTRYPOINT ["/scripts/wp_config.sh"]

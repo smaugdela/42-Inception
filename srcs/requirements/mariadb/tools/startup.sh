@@ -42,4 +42,4 @@ mysql -e "FLUSH PRIVILEGES;"
 
 service mysql stop
 
-exec mysqld_safe
+exec mysqld_safe --datadir='/var/lib/mysql'

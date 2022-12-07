@@ -21,12 +21,12 @@ services:
     build: requirements/wordpress/
     restart: on-failure
     env_file: .env
-    links:
-      - mariadb
     volumes:
       - wordpress_data:/var/www/html
     networks:
       - default
+    ports:
+      - "9000"
   mariadb:
     container_name: mariadb
     build: requirements/mariadb/
@@ -36,22 +36,23 @@ services:
       - mariadb_data:/var/lib/mysql
     networks:
       - default
+    ports:
+      - "3306"
 
 volumes:
   wordpress_data:
     driver: local
     driver_opts:
       type: none
-      device: '/home/smagdela/data/wordpress' # /home/$MASTER/data/wordpress
+      device: '/home/smagdela/data/wordpress'
       o: bind
   mariadb_data:
     driver: local
     driver_opts:
       type: none 
-      o: bind										 # Les Bind Mounts sont des volumes qui se montent sur un chemin d'accès à l'hôte, et ils peuvent être modifiés par d'autres processus en dehors de docker.
-      device: '/home/smagdela/data/mariadb' # /home/$MASTER/data/mariadb
+      o: bind
+      device: '/home/smagdela/data/mariadb'
 
 networks:
   default:
     driver: bridge
-# Check networks
