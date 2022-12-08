@@ -24,7 +24,7 @@ expect \"Remove anonymous users?\"
 send \"Y\r\"
 
 expect \"Disallow root login remotely?\"
-send \"n\r\"
+send \"Y\r\"
 
 expect \"Remove test database and access to it?\"
 send \"Y\r\"
@@ -41,7 +41,5 @@ mysql -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$SQL_USER' IDENTIFIED BY '$SQL_
 mysql -e "FLUSH PRIVILEGES;"
 
 service mysql stop
-
-echo "Launching mariadb (mysqld_safe)..."
 
 exec mysqld_safe --datadir='/var/lib/mysql'
