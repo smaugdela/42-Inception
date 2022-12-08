@@ -18,10 +18,10 @@
 #mv wp-config-sample.php wp-config.php
 
 rm /var/www/html/wp-config.php
-#wp config create --path="/var/www/html/" --dbname=$DB_NAME --dbuser=$SQL_USER --dbpass=$SQL_USER_PWD --dbhost=$DB_HOST --allow-root --skip-check
+wp config create --path="/var/www/html/" --dbname=$DB_NAME --dbuser=$SQL_USER --dbpass=$SQL_USER_PWD --dbhost=$DB_HOST --allow-root --skip-check
 
-sleep 20
+sleep 15
 
 echo "Launching php-fpm..."
 
-exec /usr/sbin/php-fpm7.3 --nodaemonize
+exec /usr/sbin/php-fpm7.3 -F

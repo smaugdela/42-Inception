@@ -42,4 +42,6 @@ mysql -e "FLUSH PRIVILEGES;"
 
 service mysql stop
 
+echo "Launching mariadb (mysqld_safe)..."
+
 exec mysqld_safe --datadir='/var/lib/mysql'
