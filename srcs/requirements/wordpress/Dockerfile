@@ -2,6 +2,7 @@ FROM	debian:buster
 
 RUN	apt-get update -y && \
 	apt-get install -y curl \
+						sendmail \
 						php7.3 \
 						php7.3-cli \
 						php7.3-fpm \
