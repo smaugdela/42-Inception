@@ -1,40 +1,68 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: smagdela <smagdela@student.42.fr>          +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/12/13 13:28:22 by smagdela          #+#    #+#              #
+#    Updated: 2022/12/13 14:40:44 by smagdela         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
 
-
-
+#################
 #	Variables	#
+#################
 
-NAME = Inception
+NAME = inception
 
-SRCS = ./srcs/requirements/
+#	Directories
+SRCS = ./srcs/
 
+REQ	=	${SRCS}requirements/
+
+VOLUMES	=	wordpress \
+			mariadb
+VOLUMES	:=	${addprefix /home/smagdela/data/,${VOLUMES}}
+
+COMPOSE = ${SRCS}
+
+#	Files
 SERVICES = nginx \
 	   mariadb \
 	   wordpress
 
-COMPOSE = ./srcs/docker-compose.yml
+SERV_DOCKERFILES = ${addprefix ${REQ},${SERVICES}/Dockerfile}
 
-SERVICE_DIR = ${addprefix ${./srcs/requirements/},${SERVICES}/Dockerfile}
-
-
-
+#############
 #	Rules	#
+#############
 
-all:	${SERVICE_DIR} build
+all:	${VOLUMES} ${SERVICES}
+	docker compose --project-directory ${COMPOSE} -p ${NAME} up -d
 
 ${NAME}:	all
 
 up:	all
 
+${VOLUMES}:
+	mkdir -p $@
+
+${SERVICES}:	${SERV_DOCKERFILES}
+	docker build -t $@ $<
+
 down:
+	docker compose -p ${NAME} stop
 
-build:	${SERVICE_DIR}
-	docker build -t ${SERVICES} $</Dockerfile
+clean:	down
+	docker container rm -f nginx mariadb wordpress
+	docker image rm -f ${NAME}-nginx ${NAME}-mariadb ${NAME}-wordpress
 
-clean:
+fclean:	clean
+	docker volume rm -f ${NAME}_mariadb_data
+	docker volume rm -f ${NAME}_wordpress_data
+	sudo rm -rf ${VOLUMES}
 
-fclean:
-
-re:
+re:	fclean all
 
 .PHONY: all, up, down, clean, fclean, re
-
