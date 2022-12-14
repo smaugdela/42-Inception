@@ -6,7 +6,7 @@
 #    By: smagdela <smagdela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/13 13:28:22 by smagdela          #+#    #+#              #
-#    Updated: 2022/12/13 14:40:44 by smagdela         ###   ########.fr        #
+#    Updated: 2022/12/13 15:28:28 by smagdela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,7 @@ down:
 
 clean:	down
 	docker container rm -f nginx mariadb wordpress
-	docker image rm -f ${NAME}-nginx ${NAME}-mariadb ${NAME}-wordpress
+	docker image rm -f ${addprefix ${NAME}-,${SERVICES}} ${SERVICES}
 
 fclean:	clean
 	docker volume rm -f ${NAME}_mariadb_data

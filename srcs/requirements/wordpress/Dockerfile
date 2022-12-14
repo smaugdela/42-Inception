@@ -38,4 +38,4 @@ RUN	chmod 755 /scripts/wp_startup.sh && \
 
 EXPOSE	9000
 
-ENTRYPOINT ["bash", "/scripts/wp_startup.sh"]
+ENTRYPOINT ["/scripts/wp_startup.sh"]
