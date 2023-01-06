@@ -6,7 +6,7 @@
 #    By: smagdela <smagdela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/13 13:28:22 by smagdela          #+#    #+#              #
-#    Updated: 2022/12/13 15:28:28 by smagdela         ###   ########.fr        #
+#    Updated: 2023/01/06 17:41:58 by smagdela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ VOLUMES	=	wordpress \
 			mariadb
 VOLUMES	:=	${addprefix /home/smagdela/data/,${VOLUMES}}
 
-COMPOSE = ${SRCS}
+COMPOSE_DIR = ${SRCS}
 
 #	Files
 SERVICES = nginx \
@@ -39,7 +39,7 @@ SERV_DOCKERFILES = ${addprefix ${REQ},${SERVICES}/Dockerfile}
 #############
 
 all:	${VOLUMES} ${SERVICES}
-	docker compose --project-directory ${COMPOSE} -p ${NAME} up -d
+	docker compose --project-directory ${COMPOSE_DIR} -p ${NAME} up -d
 
 ${NAME}:	all
 
@@ -52,7 +52,7 @@ ${SERVICES}:	${SERV_DOCKERFILES}
 	docker build -t $@ $<
 
 down:
-	docker compose -p ${NAME} stop
+	docker compose -p ${NAME} down
 
 clean:	down
 	docker container rm -f nginx mariadb wordpress

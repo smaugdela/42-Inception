@@ -17,7 +17,7 @@ RUN	mkdir -p /var/www/html && \
 	mkdir -p /run/nginx
 
 # Exposing https port
-EXPOSE	443
+# EXPOSE	443
 
 # Launching container
 CMD	[ "nginx", "-g", "daemon off;" ]

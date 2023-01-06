@@ -36,6 +36,6 @@ RUN	chmod 755 /scripts/wp_startup.sh && \
 	chown -R www-data:www-data . && \
 	chmod 755 *
 
-EXPOSE	9000
+# EXPOSE	9000
 
 ENTRYPOINT ["/scripts/wp_startup.sh"]

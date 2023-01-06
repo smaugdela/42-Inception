@@ -16,6 +16,7 @@ services:
       - wordpress_data:/var/www/html
     networks:
       - backend
+
   wordpress:
     container_name: wordpress
     depends_on: 
@@ -29,6 +30,7 @@ services:
       - wordpress_data:/var/www/html
     networks:
       - backend
+
   mariadb:
     container_name: mariadb
     build:
