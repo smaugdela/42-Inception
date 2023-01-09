@@ -23,7 +23,7 @@ REQ	=	${SRCS}requirements/
 
 VOLUMES	=	wordpress \
 			mariadb
-VOLUMES	:=	${addprefix /home/smagdela/data/,${VOLUMES}}
+VOLUMES	:=	${addprefix ~/data/,${VOLUMES}}
 
 COMPOSE_DIR = ${SRCS}
 
@@ -40,6 +40,7 @@ SERV_DOCKERFILES = ${addprefix ${REQ},${SERVICES}/Dockerfile}
 
 all:	${VOLUMES} ${SERVICES}
 	docker compose --project-directory ${COMPOSE_DIR} -p ${NAME} up -d
+	make logs
 
 ${NAME}:	all
 
@@ -51,10 +52,13 @@ ${VOLUMES}:
 ${SERVICES}:	${SERV_DOCKERFILES}
 	docker build -t $@ $<
 
-down:
-	docker compose -p ${NAME} down
+stop:
+	docker compose -p ${NAME} stop
 
-clean:	down
+logs:
+	docker compose -f ${COMPOSE_DIR}docker-compose.yml logs -f
+
+clean:	stop
 	docker container rm -f nginx mariadb wordpress
 	docker image rm -f ${addprefix ${NAME}-,${SERVICES}} ${SERVICES}
 
