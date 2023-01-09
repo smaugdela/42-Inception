@@ -1,6 +1,9 @@
 #!/bin/bash
 
 sleep 15
+# This sleep should be replace by some sort of loop using netcat to check if mariadb is up:
+# netcat -vz mariadb 3306
+# Check if it ends withn 'open', if not, continue the loop.
 
 wp config create --path="/var/www/html/" --dbname=$DB_NAME --dbuser=$SQL_USER --dbpass=$SQL_USER_PWD --dbhost=$DB_HOST --allow-root --skip-check
 

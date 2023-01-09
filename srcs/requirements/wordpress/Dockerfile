@@ -2,6 +2,7 @@ FROM	debian:buster
 
 RUN	apt-get update -y && \
 	apt-get install -y curl \
+						netcat \
 						sendmail \
 						php7.3 \
 						php7.3-cli \
@@ -35,7 +36,5 @@ RUN	chmod 755 /scripts/wp_startup.sh && \
 	mkdir -p /run/php && \
 	chown -R www-data:www-data . && \
 	chmod 755 *
-
-# EXPOSE	9000
 
 ENTRYPOINT ["/scripts/wp_startup.sh"]

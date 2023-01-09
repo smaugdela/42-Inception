@@ -40,7 +40,6 @@ SERV_DOCKERFILES = ${addprefix ${REQ},${SERVICES}/Dockerfile}
 
 all:	${VOLUMES} ${SERVICES}
 	docker compose --project-directory ${COMPOSE_DIR} -p ${NAME} up -d
-	make logs
 
 ${NAME}:	all
 
@@ -54,9 +53,6 @@ ${SERVICES}:	${SERV_DOCKERFILES}
 
 stop:
 	docker compose -p ${NAME} stop
-
-logs:
-	docker compose -f ${COMPOSE_DIR}docker-compose.yml logs -f
 
 clean:	stop
 	docker container rm -f nginx mariadb wordpress

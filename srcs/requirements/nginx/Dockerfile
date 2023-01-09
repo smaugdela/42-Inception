@@ -16,8 +16,5 @@ RUN	mkdir -p /var/www/html && \
 	chown -R www-data:www-data /var/www/html && \
 	mkdir -p /run/nginx
 
-# Exposing https port
-# EXPOSE	443
-
 # Launching container
 CMD	[ "nginx", "-g", "daemon off;" ]

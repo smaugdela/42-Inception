@@ -11,11 +11,8 @@ COPY	tools/mariadb_startup.sh /scripts/mariadb_startup.sh
 
 RUN	mkdir -p /var/run/mysqld  && \
 	chown -R mysql:mysql /var/run/mysqld && \
-	chmod 777 /var/run/mysqld \
-		/scripts/mariadb_startup.sh
-
-RUN	mysql_install_db
-
-# EXPOSE	3306
+	chmod 755 /var/run/mysqld \
+		/scripts/mariadb_startup.sh && \
+	mysql_install_db
 
 ENTRYPOINT ["/scripts/mariadb_startup.sh"]
