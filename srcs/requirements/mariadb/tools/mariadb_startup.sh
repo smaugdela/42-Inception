@@ -42,6 +42,8 @@ mysql -e "FLUSH PRIVILEGES;"
 
 service mysql stop
 
+timeout 1 netcat wordpress 9000
+
 echo "Mariadb is configured and ready!"
 
 exec mysqld_safe --datadir='/var/lib/mysql'
