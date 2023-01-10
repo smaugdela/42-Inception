@@ -6,7 +6,7 @@
 #    By: smagdela <smagdela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/13 13:28:22 by smagdela          #+#    #+#              #
-#    Updated: 2023/01/10 14:09:17 by smagdela         ###   ########.fr        #
+#    Updated: 2023/01/10 15:49:14 by smagdela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,6 +54,15 @@ ${SERVICES}:	${SERV_DOCKERFILES}
 stop:
 	docker compose -p ${NAME} stop
 
+logs:
+	@echo "\033[0;32mnginx:\n"
+	@docker logs nginx -t --tail 10
+	@echo "-----\033[0;33m\nwordpress:\n"
+	@docker logs wordpress -t --tail 10
+	@echo "-----\033[0;34m\nmariadb:\n"
+	@docker logs mariadb -t --tail 10
+	@echo "\033[0m"
+
 clean:	stop
 	docker container rm -f nginx mariadb wordpress
 	docker image rm -f ${addprefix ${NAME}-,${SERVICES}} ${SERVICES}
@@ -65,4 +74,4 @@ fclean:	clean
 
 re:	fclean all
 
-.PHONY: all, up, down, clean, fclean, re
+.PHONY: all, up, stop, clean, fclean, re
