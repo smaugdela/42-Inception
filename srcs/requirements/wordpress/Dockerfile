@@ -5,6 +5,7 @@ RUN	apt-get update -y && \
 	apt-get install -y curl \
 						netcat \
 						sendmail \
+						mariadb-client \
 						php7.3 \
 						php7.3-cli \
 						php7.3-fpm \
@@ -28,6 +29,7 @@ WORKDIR	/var/www/html
 
 # Installation of wordpress
 RUN	curl -O https://wordpress.org/wordpress-6.1.1.tar.gz && \
+	ls && \
 	tar xzvf wordpress-6.1.1.tar.gz && \
 	rm -f wordpress-6.1.1.tar.gz && \
 	mv wordpress/* . && \

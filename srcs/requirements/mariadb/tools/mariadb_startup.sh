@@ -1,6 +1,14 @@
 #!/bin/bash
 
+if [ -d "/var/lib/mysql/$DB_NAME" ]
+then 
+	echo "Database already exists, starting now."
+	exec mysqld_safe --datadir='/var/lib/mysql'
+fi
+
 service mysql start
+
+echo "Launching mysql secure installation."
 
 expect -c "
 
@@ -34,6 +42,8 @@ send \"Y\r\"
 
 expect eof
 "
+
+echo "Setting up database and users."
 
 mysql -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;"
 mysql -e "CREATE USER IF NOT EXISTS '$SQL_USER'@'%' IDENTIFIED BY '$SQL_USER_PWD';"

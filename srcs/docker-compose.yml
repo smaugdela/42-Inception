@@ -3,6 +3,8 @@ version: '3'
 services:
   nginx:
     container_name: nginx
+    depends_on: 
+      - wordpress
     build:
       context: ./requirements/nginx/
       dockerfile: ./Dockerfile

@@ -6,7 +6,7 @@
 #    By: smagdela <smagdela@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/13 13:28:22 by smagdela          #+#    #+#              #
-#    Updated: 2023/01/10 15:49:14 by smagdela         ###   ########.fr        #
+#    Updated: 2023/01/10 17:39:14 by smagdela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,13 +32,11 @@ SERVICES = nginx \
 	   mariadb \
 	   wordpress
 
-SERV_DOCKERFILES = ${addprefix ${REQ},${SERVICES}/Dockerfile}
-
 #############
 #	Rules	#
 #############
 
-all:	${VOLUMES} ${SERVICES}
+all:	${VOLUMES}
 	docker compose --project-directory ${COMPOSE_DIR} -p ${NAME} up -d
 
 ${NAME}:	all
@@ -48,8 +46,8 @@ up:	all
 ${VOLUMES}:
 	mkdir -p $@
 
-${SERVICES}:	${SERV_DOCKERFILES}
-	docker build -t $@ $<
+start:
+	docker compose -p ${NAME} start
 
 stop:
 	docker compose -p ${NAME} stop
@@ -64,14 +62,14 @@ logs:
 	@echo "\033[0m"
 
 clean:	stop
-	docker container rm -f nginx mariadb wordpress
-	docker image rm -f ${addprefix ${NAME}-,${SERVICES}} ${SERVICES}
+	docker container rm -f ${SERVICES}
 
 fclean:	clean
+	docker image rm -f ${addprefix ${NAME}-,${SERVICES}}
 	docker volume rm -f ${NAME}_mariadb_data
 	docker volume rm -f ${NAME}_wordpress_data
 	sudo rm -rf ${VOLUMES}
 
 re:	fclean all
 
-.PHONY: all, up, stop, clean, fclean, re
+.PHONY: all, up, start, stop, clean, fclean, re
