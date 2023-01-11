@@ -38,6 +38,7 @@ SERVICES = nginx \
 
 all:	${VOLUMES}
 	docker compose --project-directory ${COMPOSE_DIR} -p ${NAME} up -d
+	make logs
 
 ${NAME}:	all
 
@@ -52,14 +53,17 @@ start:
 stop:
 	docker compose -p ${NAME} stop
 
-logs:
+log:
 	@echo "\033[0;32mnginx:\n"
-	@docker logs nginx -t --tail 10
+	@docker logs nginx --tail 10
 	@echo "-----\033[0;33m\nwordpress:\n"
 	@docker logs wordpress -t --tail 10
 	@echo "-----\033[0;34m\nmariadb:\n"
-	@docker logs mariadb -t --tail 10
+	@docker logs mariadb --tail 10
 	@echo "\033[0m"
+
+logs:
+	@watch -n 1 -c make log
 
 clean:	stop
 	docker container rm -f ${SERVICES}
@@ -72,4 +76,4 @@ fclean:	clean
 
 re:	fclean all
 
-.PHONY: all, up, start, stop, clean, fclean, re
+.PHONY: all, up, start, stop, log, logs, clean, fclean, re
