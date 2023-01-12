@@ -57,7 +57,7 @@ log:
 	@echo "\033[0;32mnginx:\n"
 	@docker logs nginx --tail 10
 	@echo "-----\033[0;33m\nwordpress:\n"
-	@docker logs wordpress -t --tail 10
+	@docker logs wordpress --tail 10
 	@echo "-----\033[0;34m\nmariadb:\n"
 	@docker logs mariadb --tail 10
 	@echo "\033[0m"
