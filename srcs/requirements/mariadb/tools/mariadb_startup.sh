@@ -45,13 +45,13 @@ expect eof
 
 echo "Setting up database and users."
 
-mysql -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;"
-mysql -e "GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY '$SQL_ROOT_PWD';"
-mysql -e "FLUSH PRIVILEGES;"
-mysql -e "CREATE USER IF NOT EXISTS '$SQL_USER'@'%' IDENTIFIED BY '$SQL_USER_PWD';"
-mysql -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$SQL_USER' IDENTIFIED BY '$SQL_USER_PWD';"
-mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$SQL_ROOT_PWD';"
-mysql -e "FLUSH PRIVILEGES;"
+mysql -u root -p$SQL_ROOT_PWD -e "CREATE DATABASE IF NOT EXISTS $DB_NAME;"
+# mysql -u root -p$SQL_ROOT_PWD -e "GRANT ALL ON *.* TO 'root'@'%' IDENTIFIED BY '$SQL_ROOT_PWD';"
+# mysql -u root -p$SQL_ROOT_PWD -e "FLUSH PRIVILEGES;"
+mysql -u root -p$SQL_ROOT_PWD -e "CREATE USER IF NOT EXISTS '$SQL_USER'@'%' IDENTIFIED BY '$SQL_USER_PWD';"
+mysql -u root -p$SQL_ROOT_PWD -e "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$SQL_USER' IDENTIFIED BY '$SQL_USER_PWD';"
+mysql -u root -p$SQL_ROOT_PWD -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '$SQL_ROOT_PWD';"
+mysql -u root -p$SQL_ROOT_PWD -e "FLUSH PRIVILEGES;"
 
 #service mysql stop
 

@@ -73,6 +73,7 @@ fclean:	clean
 	docker volume rm -f ${NAME}_mariadb_data
 	docker volume rm -f ${NAME}_wordpress_data
 	sudo rm -rf ${VOLUMES}
+	docker system prune -a
 
 re:	fclean all
 
